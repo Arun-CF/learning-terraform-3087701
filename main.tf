@@ -17,7 +17,7 @@ data "aws_ami" "app_ami" {
 module "vpc" {
   source = "terraform-aws-modules/vpc/aws"
 
-  name = "blog_vpc"
+  name = "blog"
   cidr = "10.0.0.0/16"
 
   azs             = ["us-west-2a", "us-west-2b", "us-west-2c"]
@@ -47,8 +47,8 @@ module "alb" {
 
   load_balancer_type = "application"
 
-  vpc_id             = module.blog_vpc.vpc_id
-  subnets            = module.blog_vpc.public_subnets
+  vpc_id             = module.vpc.vpc_id
+  subnets            = module.vpc.public_subnets
   security_groups    = module.blog_sg.security_group_id
 
   
@@ -86,7 +86,7 @@ module "blog_sg" {
   version = "5.1.0"
   name    = "New-test-SG"
   
-  vpc_id = module.blog_vpc.vpc_id
+  vpc_id = module.vpc.vpc_id
   ingress_rules = ["http-80-tcp","https-443-tcp","all-icmp"]
   ingress_cidr_blocks = ["0.0.0.0/0"]
 
