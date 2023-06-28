@@ -11,7 +11,7 @@ data "aws_ami" "app_ami" {
     values = ["hvm"]
   }
 
-  owner =[var.ami_filter.owners] # Bitnami
+  owner =[var.ami_filter.owner] # Bitnami
 }
 
 module "blog_vpc" {
